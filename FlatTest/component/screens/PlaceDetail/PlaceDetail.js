@@ -3,6 +3,8 @@ import {  View, Image, Text, Button, StyleSheet, TouchableOpacity } from "react-
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
 import {deletePlace, add_place} from '../../stroe/actions/index';
+import background from '../../assets/background.jpg'
+
 
 class PlaceDetail extends Component{
 
@@ -15,8 +17,9 @@ class PlaceDetail extends Component{
     return (
       <View style={styles.modalContainer}>
         <View>
-          <Image source={this.props.selectedPlace.image} style={styles.placeImage} />
+          <Image source={background} style={styles.placeImage} />
           <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
+          <Text style={styles.placeName}>{this.props.selectedPlace.email}</Text>
         </View>
         <View>
           <TouchableOpacity onPress = {this.onDeleteHandler}>

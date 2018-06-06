@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button, TouchableOpacity, StyleSheet, Animated, Modal, AsyncStorage } from 'react-native';
+import Icon from "react-native-vector-icons/Ionicons";
+
 import { connect } from 'react-redux';
 import PlaceList from '../../PlaceList/PlaceList';
 import firebase, { Firebase } from 'react-native-firebase'
@@ -49,6 +51,10 @@ class FindPlaces extends Component {
         this.props.navigator.push({
             screen: 'ReduxForm',
         })
+        // this.props.navigator.push({
+        //     screen: 'Profile',
+          
+        // });
 
     }
 
@@ -89,10 +95,20 @@ class FindPlaces extends Component {
             return place.key === key;
         });
 
+        // this.props.navigator.push({
+        //     screen: 'DetailScreen',
+        //     title: selplace.name,
+        //     passProps: {
+
+        //         selectedPlace: selplace
+
+        //     }
+        // });
         this.props.navigator.push({
-            screen: 'DetailScreen',
+            screen: 'Profile',
             title: selplace.name,
             passProps: {
+
                 selectedPlace: selplace
 
             }
@@ -130,18 +146,19 @@ class FindPlaces extends Component {
 
         this.setState({ isLogout: true })
     }
-    onModal = ()=>{
-        AsyncStorage.removeItem('@MySuperStore:key').then((value)=>{
+    onModal = () => {
+        AsyncStorage.removeItem('@MySuperStore:key').then((value) => {
 
-        this.props.navigator.resetTo({
-            screen: 'AuthScreenPlace',
+            this.props.navigator.resetTo({
+                screen: 'AuthScreenPlace',
+            })
+            this.setState({ isLogout: false })
         })
-        this.setState({isLogout:false})})
     }
 
 
-    onModalClose = ()=>{
-        this.setState({isLogout:false})
+    onModalClose = () => {
+        this.setState({ isLogout: false })
     }
 
     render() {
@@ -173,22 +190,24 @@ class FindPlaces extends Component {
                 <Modal
                     visible={this.state.isLogout !== false}
                     animationType="slide"
-                    onRequestClose={()=>{alert('Stay log in')}}
+                    onRequestClose={() => { alert('Stay log in') }}
                 >
                     <View style={styles.container} >
-                    <Text style = {styles.textContainerModal} color = 'red'>  Are you sure to log out</Text>
+                        <Text style={styles.textContainerModal} color='red'>  Are you sure to log out</Text>
 
-                        <View style = {styles.logoutButton}>
-                            <Button title="Logout" color="red"  onPress={this.onModal}/>
+                        <View style={styles.logoutButton}>
+                          
+                            <Button title="Logout" color="blue" onPress={this.onModal} />
                         </View>
-                        <View style = {styles.closeButton}>
-                            
-                            <Button title="Close"  color='green'onPress={this.onModalClose}/>
+                        
+                        <View style={styles.closeButton}>
+
+                            <Button title="Close" color='green' onPress={this.onModalClose} />
                         </View>
                     </View>
                 </Modal>
             );
-            
+
         }
 
         // if (this.state.placeLoad) {
@@ -222,19 +241,34 @@ class FindPlaces extends Component {
                 <PlaceList places={this.props.places} onItemSelected={this.onItemSelectedHandler} />
                 <View style={styles.floatinButton}>
                     <TouchableOpacity onPress={this.addHandler} >
-                        <View >
+                        <View style={styles.drawerItem}>
+                            <Icon
+                                name='ios-add-circle-outline'
+                                size={40}
+                                color="#aaa"
+                                style={{ marginTop:10, color:'steelblue'
+                            }}
+
+                            />
                             <Text style={styles.textContainer}>Add</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
                 {/* <PlaceList places = {this.props.places} onItemSelected = {this.onItemSelectedHandler}/> */}
-                <View style={styles.floatinButton1}>
+                {/* <View style={styles.floatinButton1}>
                     <TouchableOpacity onPress={this.logout} >
-                        <View >
+                        <View style={styles.drawerItem}>
+                            <Icon
+                                name='md-log-out'
+                                size={30}
+                                color="#aaa"
+                                style={{ marginTop: 30 }}
+
+                            />
                             <Text style={styles.textContainer}>Logout</Text>
                         </View>
                     </TouchableOpacity>
-                </View>
+                </View> */}
 
             </View>
 
@@ -265,48 +299,55 @@ const styles = StyleSheet.create({
 
     },
     floatinButton: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        backgroundColor: '#01a699',
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: "#eee",
         position: 'absolute',
-        bottom: 5,
-        right: 5,
+        bottom: 10,
+        right: 10,
     },
     container: {
         flex: 1,
 
     },
-    logoutButton:{
-        justifyContent:'center',
-        // alignItems:'center',
-        marginBottom: 10,
-        // marginLeft:20,
-        marginLeft:100,
-        marginTop:200,
-        width:200,
-        height:30,
-        borderColor:'black',
-        // borderWidth:5,
-        borderRadius:100
+    drawerItem: {
+        justifyContent: 'center',
+        alignItems: "center",
+        backgroundColor: "#eee",
+        borderRadius: 2,
+
     },
-    closeButton:{
-        justifyContent:'center',
+    logoutButton: {
+        justifyContent: 'center',
         // alignItems:'center',
         marginBottom: 10,
         // marginLeft:20,
-        marginLeft:100,
-        width:200,
-        height:30,
-        borderColor:'black',
+        marginLeft: 100,
+        marginTop: 200,
+        width: 200,
+        height: 30,
+        borderColor: 'black',
         // borderWidth:5,
-        borderRadius:100
+        borderRadius: 100
+    },
+    closeButton: {
+        justifyContent: 'center',
+        // alignItems:'center',
+        marginBottom: 10,
+        // marginLeft:20,
+        marginLeft: 100,
+        width: 200,
+        height: 30,
+        borderColor: 'black',
+        // borderWidth:5,
+        borderRadius: 100
     },
     floatinButton1: {
         width: 60,
         height: 60,
         borderRadius: 30,
-        backgroundColor: 'red',
+        backgroundColor: '#eee',
         position: 'absolute',
         bottom: 5,
         right: 180,
@@ -319,9 +360,9 @@ const styles = StyleSheet.create({
 
     },
     submitButton: {
-      
+
         alignItems: "flex-end",
-       
+
         backgroundColor: "orange",
         borderColor: "#555555",
         borderWidth: 33,
@@ -350,7 +391,7 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         margin: 25,
-        fontWeight :'bold'
+        fontWeight: 'bold'
         // fontSize : 26,
 
 

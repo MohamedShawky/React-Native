@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { View, Text, Button, TextInput, StyleSheet, ImageBackground, Dimensions, AsyncStorage } from 'react-native';
 
 import startTabs from '../MainTabs/mainScreen';
+// import findn from '../MainTabs/find'
+import FindPlaces from '../../screens/FindPlaces/FindPlaces'
 
 import DefaultInput from '../../UI/DefaultInput';
 
@@ -75,7 +77,6 @@ class AuthScreen extends Component {
         // startTabs();
 
       
-    
         try {
              AsyncStorage.setItem('@MySuperStore:key',JSON.stringify(this.state.email)  ).then(
                  
@@ -85,9 +86,23 @@ class AuthScreen extends Component {
             console.log("Error retrieving data" + error);
         }
 
+        // this.props.navigation.navigate(
+            
+// this.props.navigation.push({
+//     screen:'ReduxForm'
+// })
 
-        startTabs();
+        // )
+        // this.props.navigation.push({
+        //     screen:'FindScreenPlace'
+        // })
+        this.props.navigator.push({
+            screen: 'FindScreenPlace',
+        })
 
+        // startTabs();
+// findn();
+        // <FindPlaces/>
 
 
 

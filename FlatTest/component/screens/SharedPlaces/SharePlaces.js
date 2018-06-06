@@ -83,18 +83,14 @@ class SharePlaces extends Component {
     }
 
     imagePickHandler = image =>{
-
         this.setState(prevState =>{
-            
             return{
                 image:{
                     ...prevState.image,
                     value : image,
                     isValid : true
                 }
-
             }
-
         });
     }
     render() {

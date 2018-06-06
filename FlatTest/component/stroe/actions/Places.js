@@ -4,25 +4,77 @@ import { SET_PLACES, REMOVE_PLACE } from './ActionType';
 import firebase from '../../firebase/config.js';
 import thunk from 'redux-thunk';
 
-export const add_place = (placeName, location, image) => {
+// export const add_place = (placeName, email, image) => {
+//     return dispatch => {
+
+//         const placeData = {
+//             name: placeName,
+//             // location: location
+//         };
+//         // fetch('https://flattest-2ccf5.firebaseio.com/places.json', {
+//         //     method : 'POST',
+//         //     body : JSON.stringify(placeData),
+//         // })
+
+//         // .catch(err =>console.log (err))
+//         // .then(res => res.json())
+//         // .then(paredRes =>{
+//         //     console.log(paredRes)
+//         // });
+//         firebase.database().ref('/places/').push({
+//             name: placeName,
+//             email:email
+//         });
+
+//     };
+
+// };
+export const add_place = (placeName, email,gender,selected, image) => {
     return dispatch => {
 
         const placeData = {
             name: placeName,
             // location: location
+            image:image
         };
-        // fetch('https://flattest-2ccf5.firebaseio.com/places.json', {
+
+        // const str = firebase.storage().ref()
+
+        // const ntr = str.child('image.jpg')
+        // const mtr = ntr.child('images/image/jpg')
+        // ntr.name === mtr.name            // true
+
+        // ref.putString(image, 'base64').then(function(snapshot) {
+        //     console.log('Uploaded a base64 string!');
+        //     alert('bnnnnnnnnn')
+        //   });
+        // alert(JSON.stringify(placeData))
+        // fetch(' https://us-central1-flattest-2ccf5.cloudfunctions.net/storeImage', {
         //     method : 'POST',
-        //     body : JSON.stringify(placeData),
+        //     body : JSON.stringify({
+        //         placeData
+        //     }),
         // })
 
         // .catch(err =>console.log (err))
-        // .then(res => res.json())
+        // .then(res =>         alert(JSON.stringify(res.json()))
+        // )
         // .then(paredRes =>{
         //     console.log(paredRes)
-        // });
+            
+        //     const n = firebase.database().ref('/places/').push({
+        //             name: placeName,
+        //             email:email,
+        //             image:paredRes.imageUrl
+        //         });
+        // });n
+        // return 
         firebase.database().ref('/places/').push({
-            name: placeName
+            name: placeName,
+            email:email,
+            gender:gender,
+            selected:selected
+            // image:image.base64
         });
 
     };
@@ -72,10 +124,14 @@ export const getPlaces = () => {
             for (let key in parsedRes) {
                         places.push({
                             ...parsedRes[key],
+                            image: {
+                                uri: parsedRes[key].image
+                            },
                             key: key
                         });
             
             };
+            
             
 
             dispatch(setPlaces(places));
